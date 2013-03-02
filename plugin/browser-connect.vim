@@ -31,16 +31,16 @@
 " ======================================================================
 
 " Exit if the plugin was already loaded or compatible mode is set. {{{
-if exists("g:BrowserConnectLoaded") || &cp || !has("python")
+if exists("g:bc_loaded") || &cp || !has("python")
     finish
 endif
 
-if !exists("g:BrowserConnectServerPath")
-  echoer "BrowserConnect: g:BrowserConnectServerPath is not set."
+if !exists("g:bc_server_path")
+  echoer "BrowserConnect: g:bc_server_path is not set."
   finish
 endif
 
-let g:BrowserConnectLoaded = "010"
+let g:bc_loaded = "010"
 " }}}
 " Python source. {{{
 python <<EOF
@@ -51,7 +51,7 @@ import vim
 from urllib2 import URLError, urlopen
 
 class BrowserConnectConstants(object):
-  SERVER_PATH     = "{0}/{1}".format(vim.eval("g:BrowserConnectServerPath"), "start")
+  SERVER_PATH     = "{0}/{1}".format(vim.eval("g:bc_server_path"), "start")
   BASE_URL        = "http://localhost:9000"
   WS_URL          = "{0}/{1}".format(BASE_URL, "ws")
   RELOAD_CSS_URL  = "{0}/{1}".format(BASE_URL, "reloadCSS")
