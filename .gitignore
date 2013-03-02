@@ -1,0 +1,10 @@
+# Editor
+*.swo
+*.swp
+
+# Mac OS X
+.DS_Store
+
+# Server
+logs/
+RUNNING_PID
