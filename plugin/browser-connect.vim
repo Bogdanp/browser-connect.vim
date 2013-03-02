@@ -106,8 +106,8 @@ EOF
 " }}}
 " Mappings. {{{
 if !exists("g:bc_no_mappings")
-    vmap <C-CR> :python browserConnect.evaluate_js_selection()<CR>
-    nmap <C-CR> :python browserConnect.evaluate_buffer()<CR>
-    imap <C-CR> :python browserConnect.evaluate_buffer()<CR>
+    vmap <silent><C-CR> :python browserConnect.evaluate_js_selection()<CR>
+    nmap <silent><C-CR> :python browserConnect.evaluate_buffer()<CR>
+    imap <silent><C-CR> <ESC>:python browserConnect.evaluate_buffer()<CR>:startinsert<CR>
 endif
 " }}}
