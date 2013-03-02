@@ -10,15 +10,15 @@ directory, afterwards copy the following line into your `.vimrc` file
 and update the path to reflect the actual location of the
 `browser-connect.vim` folder.
 
-```vimscript
+```vim
 let g:bc_server_path = "/home/me/.vim/bundle/browser-connect.vim/server"
 ```
 
-By default, the plugin will map it's actions to `<C-CR>`, if you would
-like it not to do that simply add the following line to your `.vimrc`
-file:
+By default, the plugin will map it's actions to `<C-CR>`. If you would
+prefer that it not do that, simply add the following line to your
+`.vimrc` file:
 
-```vimscript
+```vim
 let g:bc_no_mappings = 1
 ```
 
@@ -42,6 +42,7 @@ Requirements
 
 * VIM 7.0+ compiled with +python
 * Python 2.6+
+* Java 7+
 
 [1]: https://github.com/tpope/vim-pathogen
 [2]: https://github.com/Bogdanp/browser-connect-server
