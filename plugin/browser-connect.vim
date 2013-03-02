@@ -73,6 +73,12 @@ class BrowserConnect(object):
   def run_server(self):
     subprocess.Popen(["sh", BrowserConnectConstants.SERVER_PATH])
 
+  def evaluate_buffer(self):
+    if vim.current.buffer.name.endswith(".css"):
+      self.reload_css()
+    else:
+      self.evluate_js_buffer()
+
   def evaluate_js_buffer(self):
     self.evaluate_js("".join(vim.current.buffer[:]))
 
@@ -97,4 +103,11 @@ class BrowserConnect(object):
 
 browserConnect = BrowserConnect()
 EOF
+" }}}
+" Mappings. {{{
+if !exists("g:bc_no_mappings")
+    vmap <C-CR> :python browserConnect.evaluate_js_selection()<CR>
+    nmap <C-CR> :python browserConnect.evaluate_buffer()<CR>
+    imap <C-CR> :python browserConnect.evaluate_buffer()<CR>
+endif
 " }}}
