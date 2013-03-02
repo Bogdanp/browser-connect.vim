@@ -78,7 +78,7 @@ class BrowserConnect(object):
       vim.command("w")
       self.reload_css()
     else:
-      self.evluate_js_buffer()
+      self.evaluate_js_buffer()
 
   def evaluate_js_buffer(self):
     self.evaluate_js("".join(vim.current.buffer[:]))
