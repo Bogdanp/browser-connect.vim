@@ -109,6 +109,6 @@ EOF
 if !exists("g:bc_no_mappings")
     vmap <silent><C-CR> :python browserConnect.evaluate_js_selection()<CR>
     nmap <silent><C-CR> :python browserConnect.evaluate_buffer()<CR>
-    imap <silent><C-CR> <ESC>:python browserConnect.evaluate_buffer()<CR>:startinsert<CR>
+    imap <silent><C-CR> <ESC>:python browserConnect.evaluate_buffer()<CR>:normal! l<CR>:startinsert<CR>
 endif
 " }}}
