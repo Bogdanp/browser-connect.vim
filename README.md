@@ -2,6 +2,9 @@ This plugin implements a VIM interface for [browser-connect-server][2]
 in order to provide a live coding environment similar to the one
 currently available in [LightTable][3].
 
+If you would like to see it in action, a (very crude) demo video
+is available [here][4].
+
 Installation
 ------------
 
@@ -35,7 +38,7 @@ do so.
 
 After doing so, you should be able to evaluate CSS buffers and JS
 buffers using `<C-CR>` as well as selections of JS. The changes should be
-instantly reflected in the browser.
+instantly reflected in your browser.
 
 Requirements
 ------------
@@ -47,3 +50,4 @@ Requirements
 [1]: https://github.com/tpope/vim-pathogen
 [2]: https://github.com/Bogdanp/browser-connect-server
 [3]: http://www.lighttable.com/
+[4]: http://www.youtube.com/watch?v=Sq-zTpxStBc
