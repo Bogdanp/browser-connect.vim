@@ -1,6 +1,6 @@
 " =======================================================================
 " File:        browser-connect.vim
-" Version:     0.2.2
+" Version:     0.2.3
 " Description: Live browser interaction for VIM.
 " Maintainer:  Bogdan Popa <popa.bogdanp@gmail.com>
 " License:     Copyright (C) 2013 Bogdan Popa
@@ -47,8 +47,9 @@ let g:bc_loaded = "010"
 " }}}
 " Python source. {{{
 python <<EOF
-import subprocess
 import os
+import platform
+import subprocess
 import sys
 import vim
 
@@ -65,7 +66,7 @@ class BrowserConnectConstants(object):
 
 class BrowserConnect(object):
   def __init__(self):
-    if not self.server_running():
+    if not self.server_running() and platform.system().lower() != "windows":
       sys.stdout.write("BrowserConnect: starting browser-connect-server.")
       self.run_server()
 
