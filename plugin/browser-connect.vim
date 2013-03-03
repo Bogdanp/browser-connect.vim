@@ -1,7 +1,7 @@
 " =======================================================================
 " File:        browser-connect.vim
 " Version:     0.2.1
-" Description: Vim plugin that provides a Python REPL inside a buffer.
+" Description: Live browser interaction for VIM.
 " Maintainer:  Bogdan Popa <popa.bogdanp@gmail.com>
 " License:     Copyright (C) 2013 Bogdan Popa
 "
