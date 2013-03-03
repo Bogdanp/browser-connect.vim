@@ -55,6 +55,7 @@ class BrowserConnectConstants(object):
   BASE_URL        = "http://localhost:9000"
   WS_URL          = "{0}/{1}".format(BASE_URL, "ws")
   RELOAD_CSS_URL  = "{0}/{1}".format(BASE_URL, "reloadCSS")
+  RELOAD_PAGE_URL = "{0}/{1}".format(BASE_URL, "reloadPage")
   EVALUATE_JS_URL = "{0}/{1}".format(BASE_URL, "evaluateJS")
 
 class BrowserConnect(object):
@@ -96,16 +97,21 @@ class BrowserConnect(object):
     self.evaluate_js("".join(lines))
 
   def reload_css(self):
-    try:
-      urlopen(BrowserConnectConstants.RELOAD_CSS_URL)
-    except URLError:
-      sys.stderr.write("BrowserConnect: could not connect to server.")
+    self.call(BrowserConnectConstants.RELOAD_CSS_URL)
+
+  def reload_page(self):
+    self.call(BrowserConnectConstants.RELOAD_PAGE_URL)
 
   def evaluate_js(self, body):
+    self.call(BrowserConnectConstants.EVALUATE_JS_URL, body)
+
+  def call(self, url, data=None):
     try:
-      urlopen(BrowserConnectConstants.EVALUATE_JS_URL, body)
+      if data is None: urlopen(url)
+      else: urlopen(url, data)
     except URLError:
       sys.stderr.write("BrowserConnect: could not connect to server.")
+    
 
 browserConnect = BrowserConnect()
 EOF
@@ -118,19 +124,26 @@ endfunction
 function! s:EvaluateBuffer()
     python browserConnect.evaluate_buffer()
 endfunction
+
+function! s:ReloadPage()
+    python browserConnect.reload_page()
+endfunction
 " }}}
 " Commands. {{{
 command! -range -nargs=0 BCEvaluateSelection call s:EvaluateSelection(<line1>, <line2>)
 command!        -nargs=0 BCEvaluateBuffer    call s:EvaluateBuffer()
+command!        -nargs=0 BCReloadPage        call s:ReloadPage()
 " }}}
 " Mappings. {{{
 if !exists("g:bc_no_mappings")
     vmap <silent><LocalLeader>be :BCEvaluateSelection<CR>
     nmap <silent><LocalLeader>be :BCEvaluateBuffer<CR>
+    nmap <silent><LocalLeader>br :BCReloadPage<CR>
 endif
 " }}}
 " Autocommands. {{{
 if !exists("g:bc_no_au")
+    au BufWritePost *.html,*.js :BCReloadPage
     au BufWritePost *.css :BCEvaluateBuffer
 endif
 " }}}

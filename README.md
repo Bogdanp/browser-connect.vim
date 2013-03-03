@@ -24,7 +24,9 @@ do so.
 
 After doing so, you should be able to evaluate CSS buffers and JS
 buffers using `<LocalLeader>be` as well as selections of JS. The changes should be
-instantly reflected in your browser.
+instantly reflected in your browser. Whenever you save a JS file or an HTML page,
+the template will be fully refreshed, you can also refresh the template without
+having to save the file using `<LocalLeader>br`.
 
 Notes
 -----
@@ -57,13 +59,14 @@ the following commands:
 ```vim
 vmap <silent><LocalLeader>be :BCEvaluateSelection<CR>
 nmap <silent><LocalLeader>be :BCEvaluateBuffer<CR>
+nmap <silent><LocalLeader>br :BCReloadPage<CR>
 ```
 
 To disable automatic behavior on save add the following to your
 `.vimrc` file:
 
 ```vim
-let [[g:bc_no_au]] = 1
+let g:bc_no_au = 1
 ```
 
 Requirements
