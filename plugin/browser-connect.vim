@@ -31,11 +31,11 @@
 " ======================================================================
 
 " Exit if the plugin was already loaded or compatible mode is set. {{{
-if exists("g:bc_loaded") || &cp || !has("python")
-    finish
-endif
-
-let g:bc_loaded = "010"
+"if exists("g:bc_loaded") || &cp || !has("python")
+"    finish
+"endif
+"
+"let g:bc_loaded = "010"
 " }}}
 " Python source. {{{
 python <<EOF
@@ -111,10 +111,22 @@ class BrowserConnect(object):
 browserConnect = BrowserConnect()
 EOF
 " }}}
+" Functions. {{{
+function! s:EvaluateSelection(beg, end)
+    python browserConnect.evaluate_js_selection()
+endfunction
+
+function! s:EvaluateBuffer()
+    python browserConnect.evaluate_buffer()
+endfunction
+" }}}
+" Commands. {{{
+command! -range -nargs=0 BCEvaluateSelection call s:EvaluateSelection(<line1>, <line2>)
+command!        -nargs=0 BCEvaluateBuffer    call s:EvaluateBuffer()
+" }}}
 " Mappings. {{{
 if !exists("g:bc_no_mappings")
-    vmap <silent><C-CR> :python browserConnect.evaluate_js_selection()<CR>
-    nmap <silent><C-CR> :python browserConnect.evaluate_buffer()<CR>
-    imap <silent><C-CR> <ESC>:python browserConnect.evaluate_buffer()<CR>:normal! l<CR>:startinsert<CR>
+    vmap <silent><LocalLeader>be :BCEvaluateSelection<CR>
+    nmap <silent><LocalLeader>be :BCEvaluateBuffer<CR>
 endif
 " }}}
