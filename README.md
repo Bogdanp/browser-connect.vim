@@ -69,6 +69,13 @@ To disable automatic behavior on save add the following to your
 let g:bc_no_au = 1
 ```
 
+Windows
+-------
+
+To run the plugin on Windows you must start the server yourself by
+going into the `browser-connect.vim/server` folder and running the
+following command `start.bat -Dhttp.port=9001`.
+
 Requirements
 ------------
 
