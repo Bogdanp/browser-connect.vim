@@ -74,7 +74,7 @@ Windows
 
 To run the plugin on Windows you must start the server yourself by
 going into the `browser-connect.vim/server` folder and running the
-following command `start.bat -Dhttp.port=9001`.
+following command `start.bat "-Dhttp.port=9001"`.
 
 Requirements
 ------------
