@@ -1,6 +1,6 @@
 " =======================================================================
 " File:        browser-connect.vim
-" Version:     0.2.1
+" Version:     0.2.2
 " Description: Live browser interaction for VIM.
 " Maintainer:  Bogdan Popa <popa.bogdanp@gmail.com>
 " License:     Copyright (C) 2013 Bogdan Popa
@@ -39,6 +39,10 @@ if !exists("g:bc_server_path")
     let g:bc_server_path = "~/.vim/bundle/browser-connect.vim/server"
 endif
 
+if !exists("g:bc_server_port")
+    let g:bc_server_port = "9001"
+endif
+
 let g:bc_loaded = "010"
 " }}}
 " Python source. {{{
@@ -52,7 +56,8 @@ from urllib2 import URLError, urlopen
 
 class BrowserConnectConstants(object):
   SERVER_PATH     = os.path.expanduser("{0}/start".format(vim.eval("g:bc_server_path")))
-  BASE_URL        = "http://localhost:9000"
+  SERVER_PORT     = str(vim.eval("g:bc_server_port"))
+  BASE_URL        = "http://localhost:{0}".format(SERVER_PORT)
   WS_URL          = "{0}/{1}".format(BASE_URL, "ws")
   RELOAD_CSS_URL  = "{0}/{1}".format(BASE_URL, "reloadCSS")
   RELOAD_PAGE_URL = "{0}/{1}".format(BASE_URL, "reloadPage")
@@ -72,7 +77,9 @@ class BrowserConnect(object):
       return False
 
   def run_server(self):
-    subprocess.Popen(["sh", BrowserConnectConstants.SERVER_PATH])
+    subprocess.Popen([
+      "sh", BrowserConnectConstants.SERVER_PATH,
+      "-Dhttp.port={0}".format(BrowserConnectConstants.SERVER_PORT)])
 
   def evaluate_buffer(self):
     if vim.current.buffer.name.endswith(".css"):

@@ -19,7 +19,7 @@ of a (modern) browser. Make sure that you have VIM running before you
 do so.
 
 ```html
-<script src="http://localhost:9000/ws"></script>
+<script src="http://localhost:9001/ws"></script>
 ```
 
 After doing so, you should be able to evaluate CSS buffers and JS
