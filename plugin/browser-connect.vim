@@ -1,6 +1,6 @@
 " =======================================================================
 " File:        browser-connect.vim
-" Version:     0.1.0
+" Version:     0.2.0
 " Description: Vim plugin that provides a Python REPL inside a buffer.
 " Maintainer:  Bogdan Popa <popa.bogdanp@gmail.com>
 " License:     Copyright (C) 2013 Bogdan Popa
@@ -128,5 +128,10 @@ command!        -nargs=0 BCEvaluateBuffer    call s:EvaluateBuffer()
 if !exists("g:bc_no_mappings")
     vmap <silent><LocalLeader>be :BCEvaluateSelection<CR>
     nmap <silent><LocalLeader>be :BCEvaluateBuffer<CR>
+endif
+" }}}
+" Autocommands. {{{
+if !exists("g:bc_no_au")
+    au BufWritePost *.css :BCEvaluateBuffer
 endif
 " }}}

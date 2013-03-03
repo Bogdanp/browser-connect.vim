@@ -8,7 +8,7 @@ available [here][4].
 Installation
 ------------
 
-Use [pathogen][1] (or [Vundle][5]) and clone this repository intoyour
+Use [pathogen][1] (or [Vundle][5]) and clone this repository into your
 `~/.vim/bundle` directory. That's it, you're good to go.
 
 Usage
@@ -57,6 +57,13 @@ the following commands:
 ```vim
 vmap <silent><LocalLeader>be :BCEvaluateSelection<CR>
 nmap <silent><LocalLeader>be :BCEvaluateBuffer<CR>
+```
+
+To disable automatic behavior on save add the following to your
+`.vimrc` file:
+
+```vim
+let g:bc_no_au = 1
 ```
 
 Requirements
