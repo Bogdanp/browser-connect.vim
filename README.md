@@ -63,7 +63,7 @@ To disable automatic behavior on save add the following to your
 `.vimrc` file:
 
 ```vim
-let g:bc_no_au = 1
+let [[g:bc_no_au]] = 1
 ```
 
 Requirements

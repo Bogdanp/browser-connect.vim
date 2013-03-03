@@ -1,6 +1,6 @@
 " =======================================================================
 " File:        browser-connect.vim
-" Version:     0.2.0
+" Version:     0.2.1
 " Description: Vim plugin that provides a Python REPL inside a buffer.
 " Maintainer:  Bogdan Popa <popa.bogdanp@gmail.com>
 " License:     Copyright (C) 2013 Bogdan Popa
@@ -31,11 +31,15 @@
 " ======================================================================
 
 " Exit if the plugin was already loaded or compatible mode is set. {{{
-"if exists("g:bc_loaded") || &cp || !has("python")
-"    finish
-"endif
-"
-"let g:bc_loaded = "010"
+if exists("g:bc_loaded") || &cp || !has("python")
+    finish
+endif
+
+if !exists("g:bc_server_path")
+    let g:bc_server_path = "~/.vim/bundle/browser-connect.vim/server"
+endif
+
+let g:bc_loaded = "010"
 " }}}
 " Python source. {{{
 python <<EOF
@@ -47,12 +51,7 @@ import vim
 from urllib2 import URLError, urlopen
 
 class BrowserConnectConstants(object):
-  try:
-    SERVER_PATH = "{0}/start".format(vim.eval("g:bc_server_path"))
-  except:
-    SERVER_PATH = "~/.vim/bundle/browser-connect.vim/server/start"
-    
-  SERVER_PATH     = os.path.expanduser(SERVER_PATH)
+  SERVER_PATH     = os.path.expanduser("{0}/start".format(vim.eval("g:bc_server_path")))
   BASE_URL        = "http://localhost:9000"
   WS_URL          = "{0}/{1}".format(BASE_URL, "ws")
   RELOAD_CSS_URL  = "{0}/{1}".format(BASE_URL, "reloadCSS")
