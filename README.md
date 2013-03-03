@@ -8,10 +8,16 @@ is available [here][4].
 Installation
 ------------
 
-Use [pathogen][1] and clone this repo into your `~/.vim/bundle`
-directory, afterwards copy the following line into your `.vimrc` file
-and update the path to reflect the actual location of the
-`browser-connect.vim` folder.
+Use [pathogen][1] (or [Vundle][5]) and clone this repo into your `~/.vim/bundle`
+directory. That's it, you're good to go.
+
+Notes
+-----
+
+If you installed the plugin someplace other than
+`~/.vim/bundle/browser-connect.vim` you will have to paste the
+following snippet into your `.vimrc` file and update the path to
+reflect the actual location of the `browser-connect.vim` folder.
 
 ```vim
 let g:bc_server_path = "/home/me/.vim/bundle/browser-connect.vim/server"
@@ -51,3 +57,4 @@ Requirements
 [2]: https://github.com/Bogdanp/browser-connect-server
 [3]: http://www.lighttable.com/
 [4]: http://www.youtube.com/watch?v=Sq-zTpxStBc
+[5]: https://github.com/gmarik/vundle

@@ -35,23 +35,24 @@ if exists("g:bc_loaded") || &cp || !has("python")
     finish
 endif
 
-if !exists("g:bc_server_path")
-  echoer "BrowserConnect: g:bc_server_path is not set."
-  finish
-endif
-
 let g:bc_loaded = "010"
 " }}}
 " Python source. {{{
 python <<EOF
 import subprocess
+import os
 import sys
 import vim
 
 from urllib2 import URLError, urlopen
 
 class BrowserConnectConstants(object):
-  SERVER_PATH     = "{0}/{1}".format(vim.eval("g:bc_server_path"), "start")
+  try:
+    SERVER_PATH = "{0}/start".format(vim.eval("g:bc_server_path"))
+  except:
+    SERVER_PATH = "~/.vim/bundle/browser-connect.vim/server/start"
+    
+  SERVER_PATH     = os.path.expanduser(SERVER_PATH)
   BASE_URL        = "http://localhost:9000"
   WS_URL          = "{0}/{1}".format(BASE_URL, "ws")
   RELOAD_CSS_URL  = "{0}/{1}".format(BASE_URL, "reloadCSS")
@@ -85,10 +86,15 @@ class BrowserConnect(object):
 
   def evaluate_js_selection(self):
     (sx, sy), (ex, ey) = vim.current.buffer.mark("<"), vim.current.buffer.mark(">")
-    sx -= 1; sy -= 1; ex -= 1
+
+    sx -= 1
+    sy -= 1
+    ex -= 1
+
     sl, el = vim.current.buffer[sx][sy:], vim.current.buffer[ex][:ey]
-    ls = [sl] + vim.current.buffer[sx + 1:ex] + [el]
-    self.evaluate_js("".join(ls))
+
+    lines = [sl] + vim.current.buffer[sx + 1:ex] + [el]
+    self.evaluate_js("".join(lines))
 
   def reload_css(self):
     try:
