@@ -52,6 +52,8 @@ import platform
 import subprocess
 import sys
 import vim
+import commands
+import time
 
 from urllib2 import URLError, urlopen
 
@@ -65,10 +67,15 @@ class BrowserConnectConstants(object):
   EVALUATE_JS_URL = "{0}/{1}".format(BASE_URL, "evaluateJS")
 
 class BrowserConnect(object):
+
+  changenr = None
+
   def __init__(self):
     if not self.server_running() and platform.system().lower() != "windows":
       sys.stdout.write("BrowserConnect: starting browser-connect-server.")
       self.run_server()
+
+
 
   def server_running(self):
     try:
@@ -83,7 +90,8 @@ class BrowserConnect(object):
       "-Dhttp.port={0}".format(BrowserConnectConstants.SERVER_PORT)])
 
   def evaluate_buffer(self):
-    if vim.current.buffer.name.endswith(".css"):
+    ext = vim.current.buffer.name.split('.')[-1]
+    if ext in ['css', 'less']:
       vim.command("w")
       self.reload_css()
     else:
@@ -119,9 +127,26 @@ class BrowserConnect(object):
       else: urlopen(url, data)
     except URLError:
       sys.stderr.write("BrowserConnect: could not connect to server.")
+
+  def less_auto_check(self):
+    # get current number of changes for buffer
+    cur_changenr = vim.eval('changenr()')
+
+    # set changenr if its the first time we get called
+    self.changenr = cur_changenr if not self.changenr else self.changenr
+
+    # only reload if buffer has been changed
+    if cur_changenr != self.changenr:
+      # write the buffer and compile to css
+      vim.command('w|call LessCSSCompress()')
+      self.reload_css()
+      # update changenr
+      self.changenr = cur_changenr
+
     
 
 browserConnect = BrowserConnect()
+
 EOF
 " }}}
 " Functions. {{{
@@ -135,6 +160,10 @@ endfunction
 
 function! s:ReloadPage()
     python browserConnect.reload_page()
+endfunction
+
+function! s:LessAuCheckBuffer()
+    python browserConnect.less_auto_check()
 endfunction
 " }}}
 " Commands. {{{
@@ -153,5 +182,6 @@ endif
 if !exists("g:bc_no_au")
     au BufWritePost *.html,*.js :BCReloadPage
     au BufWritePost *.css :BCEvaluateBuffer
+    au CursorMoved,InsertLeave *.less :call s:LessAuCheckBuffer()
 endif
 " }}}
