@@ -86,7 +86,7 @@ class BrowserConnect(object):
       "-Dhttp.port={0}".format(BrowserConnectConstants.SERVER_PORT)])
 
   def evaluate_buffer(self):
-    if vim.current.buffer.name.endswith('.css'):
+    if vim.current.buffer.name.endswith(".css"):
       vim.command("w")
       self.reload_css()
     else:
