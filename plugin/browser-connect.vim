@@ -52,8 +52,6 @@ import platform
 import subprocess
 import sys
 import vim
-import commands
-import time
 
 from urllib2 import URLError, urlopen
 
@@ -146,7 +144,6 @@ class BrowserConnect(object):
     
 
 browserConnect = BrowserConnect()
-
 EOF
 " }}}
 " Functions. {{{
