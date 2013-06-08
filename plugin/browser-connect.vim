@@ -73,8 +73,6 @@ class BrowserConnect(object):
       sys.stdout.write("BrowserConnect: starting browser-connect-server.")
       self.run_server()
 
-
-
   def server_running(self):
     try:
       urlopen(BrowserConnectConstants.WS_URL)
